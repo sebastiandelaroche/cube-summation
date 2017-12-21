@@ -1,19 +1,55 @@
 <?php
+/**
+ * Matrix
+ *
+ * @author: sebastian.delaroche
+ *
+ * @description
+ * class with business rule to operate the querys in a matrix
+ * @nota: this class implement "fenwick tree alghoritm"
+ */
 
 class Matrix {
 
+  // attributes
+
+  /**
+   * [$matrix 3d]
+   * @var [array[n][n][n]]
+   */
   private $matrix;
+  /**
+   * [$n]
+   * @var [interger]
+   */
   private $n;
+  /**
+   * [$message]
+   * @var [string]
+   */
   private $message;
 
+  // properties
+
+  /**
+   * [getMessage gets messages by each test cases]
+   * @return [string]
+   */
   public function getMessage() { return $this->message; }
 
+  /**
+   * [__construct description]
+   * @param [integer] $n [defines matrix]
+   */
   public function __construct($n) {
     $this->matrix = [];
     $this->n = $n;
     $this->message = "";
   }
 
+  /**
+   * [createsMatrix creates matrix and initialize it]
+   */
   public function createsMatrix() {
     for($i = 0; $i <= $this->n; $i++) {
       $this->matrix[$i] = [];
@@ -26,6 +62,10 @@ class Matrix {
     }
   }
 
+  /**
+   * [executeQuery execute query by each line inside cases test]
+   * @param  [string] $intructionLine [instructions]
+   */
   public function executeQuery($intructionLine) {
     $matches = preg_split("/[\s]+/", $intructionLine);
     switch($matches[0]) {
@@ -41,6 +81,13 @@ class Matrix {
     }
   }
 
+  /**
+   * [update updates a position of the matrix]
+   * @param  [integer] $x
+   * @param  [integer] $y
+   * @param  [integer] $z
+   * @param  [integer] $value
+   */
   private function update($x, $y, $z, $value) {
     if ($x <= $this->n && $y <= $this->n && $z <= $this->n
       && -pow(10, 9) <= $value && $value <= pow(10, 9)) {
@@ -48,6 +95,16 @@ class Matrix {
     }
   }
 
+  /**
+   * [query finds the value in a specific position of the matrix]
+   * @param  [type] $x1
+   * @param  [type] $y1
+   * @param  [type] $z1
+   * @param  [type] $x2
+   * @param  [type] $y2
+   * @param  [type] $z2
+   * @return [integer]
+   */
   private function query($x1, $y1, $z1, $x2, $y2, $z2) {
     if (!((1 <= $x1 && $x2 <= $this->n) && (1 <= $y1 && $y2 <= $this->n)
       && (1 <= $z1 && $z2 <= $this->n))) return 0;
@@ -66,10 +123,20 @@ class Matrix {
     }
   }
 
+  /**
+   * [extractValueByBlock]
+   * @param  [integer] $x
+   * @param  [integer] $y
+   * @param  [integer] $z
+   */
   private function extractValueByBlock($x, $y, $z) {
     return $this->matrix[$x][$y][$z];
   }
 
+  /**
+   * [buildMessage builds message by each cases test]
+   * @param  [type] $result
+   */
   private function buildMessage($result) {
     $this->message .= $result . "<br>";
   }
