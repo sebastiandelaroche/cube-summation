@@ -1,0 +1,1 @@
+In the test I did not see the need to use frameworks, so try to make a very clean development, develop a class called Matrix that is responsible for orchestrating all operations related to the Matrix, apart from that use the fenwick tree algorithm for searches and updates of a hot matrix.
